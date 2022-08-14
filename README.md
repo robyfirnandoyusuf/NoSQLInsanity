@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 💉 NoSQLInsanity
 <p><img src="https://i.postimg.cc/bJGrw0H6/16149.png" width="250px"></p>
 
