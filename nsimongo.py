@@ -16,5 +16,10 @@ def paramMenu(nsi):
   print(nsi.info())
   print('''\n=================\n[Configuration Parameter]\n\n1) Default Payload\n2) Custom Payload\n''')
   nsi.typeParam = input("Choose One >>")
-  nsi.params = input("Input Param >>")
+  while nsi.param != 'd':
+    print('press "d" for submit the param')
+    nsi.param = input("Input Param >>")
+    
+    if (nsi.param != 'd'):
+      nsi.params.append(nsi.param)
   return nsi.typeParam

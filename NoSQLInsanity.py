@@ -24,7 +24,8 @@ class NoSQLInsanity(object):
       self.attackType = ""
       self.arrAttackTypes = ["DB Attacks (Exfiltrate)", "Access Attack"]
       self.typeParam = ""
-      self.params = ""
+      self.params = list('')
+      self.param = ""
 
     def banner(self):
       print('''
@@ -91,6 +92,7 @@ if __name__ == "__main__":
     with Switch(mainMenu) as case:
       while case('1'):
         choosedParam = nsimongo.paramMenu(nsi)
+        # print('ok' + '\n'.join(map(str, nsi.params)))
         nsimongo.typeReqPayload(nsi)
         break
       while case('2'):
