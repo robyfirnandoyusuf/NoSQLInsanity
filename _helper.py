@@ -1,3 +1,4 @@
+import requests
 class Switch:
     def __init__(self, value):
         self.value = value
@@ -36,3 +37,23 @@ class Switch:
     @property
     def default(self):
         return self()
+    
+class WebAppTester:
+    def __init__(self, url):
+        self.url = url
+    
+    def is_up(self):
+        try:
+            # Send a GET request to the web application
+            response = requests.get(self.url)
+
+            # Check the status code of the response
+            if response.status_code == 200:
+                return True
+            else:
+                return False
+        except requests.exceptions.RequestException as e:
+            # Handle any errors that occur while sending the request
+            print("An error occurred while testing the web application")
+            return False
+    

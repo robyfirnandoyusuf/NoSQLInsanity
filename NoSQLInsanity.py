@@ -22,7 +22,7 @@ class NoSQLInsanity(object):
       self.platform = platform
       self.reqMethod = ""
       self.attackType = ""
-      self.arrAttackTypes = ["DB Attacks (Exfiltrate)", "Access Attack"]
+      self.arrAttackTypes = ["DB Attacks (Exfiltrate)"]
       self.typeParam = ""
       self.params = list('')
       self.param = ""
@@ -48,7 +48,7 @@ class NoSQLInsanity(object):
 
     def mainMenu(self):
       print(self.info())
-      print('''\n=================\n[Attack type]\n\n1) DB Attacks (Exfiltrate)\n2) Access Attack\n''')
+      print('''\n=================\n[Attack type]\n\n1) DB Attacks (Exfiltrate)\n''')
       self.attackType = input("Choose Attack Type >>")
       return self.attackType
 
@@ -94,6 +94,7 @@ if __name__ == "__main__":
         choosedParam = nsimongo.paramMenu(nsi)
         # print('ok' + '\n'.join(map(str, nsi.params)))
         nsimongo.typeReqPayload(nsi)
+        nsimongo.pwnGet(url)
         break
       while case('2'):
         print('foo')
