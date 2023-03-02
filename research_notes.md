@@ -24,3 +24,7 @@ jadi memungkinkan untuk dilakukan optimasi, syaratnya web yg vulnerable mengirim
 
 https://mongoplayground.net/p/WTnItnWx7D9.
 ```
+
+3. MongoDB regex itu sama dengan regex JS / PHP: 
+   misal mau nyari apakah length nya itu >= 4 : http://regexr.com/79cmi, klo mau nyari exacth length cukup hapus aja "," koma nya
+   dengan ability ini, memungkinkan penerapan binary search
