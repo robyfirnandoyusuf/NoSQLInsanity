@@ -7,7 +7,7 @@ NoSQLInsanity: Tool for Security Assesment NoSQL
 ### Wireframe
 https://whimsical.com/nosqlinsanity-F2thpyebcaNPyCQr4UBabe
 
-<b>Researcher</b> : Roby Firnando Yusuf<br>
+<b>Researcher</b> : Roby Firnando Yusuf aka greycat aka 0x00b0<br>
 <b>Supervisor</b> : Daniel Rudiaman S. S.T., M. Kom
 
 #### Shoutout : 
