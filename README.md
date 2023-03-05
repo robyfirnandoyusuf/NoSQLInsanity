@@ -11,17 +11,17 @@ https://whimsical.com/nosqlinsanity-F2thpyebcaNPyCQr4UBabe
 <b>Supervisor</b> : Daniel Rudiaman S. S.T., M. Kom
 
 ### TODO:
-[x] Info
-[x] Menu Param
-[x] Menu HTTP Method
-[x] Menu Input Payload
-[x] Engine Checker Website is UP or DOWN
-[x] Engine Vuln Test
-[ ] Auto Set Success-Identifier
-[x] Engine Linear
-[ ] Engine Linear Count Length
-[ ] Engine Binary Search
-[ ] Engine BinSearch Count Length
+- [x] Info
+- [x] Menu Param
+- [x] Menu HTTP Method
+- [x] Menu Input Payload
+- [x] Engine Checker Website is UP or DOWN
+- [x] Engine Vuln Test
+- [ ] Auto Set Success-Identifier
+- [x] Engine Linear
+- [ ] Engine Linear Count Length
+- [ ] Engine Binary Search
+- [ ] Engine BinSearch Count Length
 #### Shoutout : 
 - Daniel aka BrownieInMotion (DiceGang - Redpwn)
 - Fernanda Darmasaputra (Tim Petir - OurLastNight)
