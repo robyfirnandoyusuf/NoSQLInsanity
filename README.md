@@ -11,7 +11,7 @@ https://whimsical.com/nosqlinsanity-F2thpyebcaNPyCQr4UBabe
 <b>Supervisor</b> : Daniel Rudiaman S. S.T., M. Kom
 
 ### TODO:
-- [x] Info
+- [x] Print Info
 - [x] Menu Param
 - [x] Menu HTTP Method
 - [x] Menu Input Payload
@@ -22,6 +22,7 @@ https://whimsical.com/nosqlinsanity-F2thpyebcaNPyCQr4UBabe
 - [ ] Engine Linear Count Length
 - [ ] Engine Binary Search
 - [ ] Engine BinSearch Count Length
+- [x] Research ability MongoDB to perform BinSearch
 #### Shoutout : 
 - Daniel aka BrownieInMotion (DiceGang - Redpwn)
 - Fernanda Darmasaputra (Tim Petir - OurLastNight)
