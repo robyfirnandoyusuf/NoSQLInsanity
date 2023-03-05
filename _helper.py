@@ -1,4 +1,10 @@
 import requests
+import random
+import string
+from collections.abc import MutableMapping
+from urllib.parse import urlencode, unquote
+import urllib.parse
+from urllib.parse import unquote
 class Switch:
     def __init__(self, value):
         self.value = value
@@ -56,4 +62,21 @@ class WebAppTester:
             # Handle any errors that occur while sending the request
             print("An error occurred while testing the web application")
             return False
+
+
+class Str:
+    def __enter__(self):
+        return self
+    # @staticmethod
+    def randStr(length):
+        if (length is None):
+            length = 6
+        return ''.join(random.choice(string.ascii_lowercase) for i in range(length))
     
+    def http_build_query(params):
+        """
+        Converts a dictionary of parameters to a URL-encoded string.
+        """
+        return unquote(urllib.parse.urlencode(params))
+        # parsed_url = urlparse(params)
+        # return parse_qs(parsed_url.query)

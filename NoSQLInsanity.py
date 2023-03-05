@@ -94,7 +94,16 @@ if __name__ == "__main__":
         choosedParam = nsimongo.paramMenu(nsi)
         # print('ok' + '\n'.join(map(str, nsi.params)))
         nsimongo.typeReqPayload(nsi)
-        nsimongo.pwnGet(url)
+        resArr = nsimongo.vulnTest(nsi=nsi)
+        
+        for item in resArr:
+            if True in item.values():
+                print("True exists in the array" + str(item))
+                break
+        else:
+          print("True does not exist in the array")
+        # params = nsimongo.requestBuilder(nsi=nsi, isExploiting=True)
+        # nsimongo.pwnGet(url, params)
         break
       while case('2'):
         print('foo')
@@ -107,3 +116,6 @@ if __name__ == "__main__":
 
 
   # nsi.request()
+  #refs: 
+  # https://github.com/eversinc33/Papaya/blob/875a1585f8f0776963c8b004597e7290b530b11c/papaya.py#L121
+  # https://github.com/Hex27/mongomap/tree/d16cee2e0b2b2af3c3a34e4f1a21f66cc7dacafe/tests
