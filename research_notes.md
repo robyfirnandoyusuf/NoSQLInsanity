@@ -32,4 +32,4 @@ https://mongoplayground.net/p/WTnItnWx7D9.
    misal mau nyari apakah length nya itu >= 4 : http://regexr.com/79cmi, klo mau nyari exacth length cukup hapus aja "," koma nya
    dengan ability ini, memungkinkan penerapan binary search
 
-4. regex mongodb itu bisa mencari rentang karakter dengan mempassing value dalam representasi hexadecimal dengan WAJIB prefix **\x** ^.[\x{HEX}-\x{HEX}]
+4. funfact,undocumented feature regex mongodb itu bisa mencari rentang karakter dengan mempassing value dalam representasi hexadecimal dengan WAJIB prefix **\x** ^.[\x{HEX}-\x{HEX}]
