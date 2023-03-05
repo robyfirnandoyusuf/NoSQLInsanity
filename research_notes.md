@@ -1,3 +1,6 @@
+## Research Notes
+### Semua catatan hasil eksplorasi lingkup MongoDB
+
 1. di mongoDB itu ada function substr untuk memotong karakter, ex:
 ```
 db.users.find({ 
