@@ -1,3 +1,6 @@
+## Research Notes
+### Semua catatan hasil eksplorasi lingkup MongoDB
+
 1. di mongoDB itu ada function substr untuk memotong karakter, ex:
 ```
 db.users.find({ 
@@ -25,6 +28,8 @@ jadi memungkinkan untuk dilakukan optimasi, syaratnya web yg vulnerable mengirim
 https://mongoplayground.net/p/WTnItnWx7D9.
 ```
 
-3. MongoDB regex itu sama dengan regex JS / PHP: 
+3. MongoDB regex itu sama dengan regex JS / PHP PCRE: 
    misal mau nyari apakah length nya itu >= 4 : http://regexr.com/79cmi, klo mau nyari exacth length cukup hapus aja "," koma nya
    dengan ability ini, memungkinkan penerapan binary search
+
+4. funfact,undocumented feature regex mongodb itu bisa mencari rentang karakter dengan mempassing value dalam representasi hexadecimal dengan WAJIB prefix **\x** ^.[\x{HEX}-\x{HEX}]
