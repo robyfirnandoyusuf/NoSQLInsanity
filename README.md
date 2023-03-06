@@ -17,9 +17,9 @@ https://whimsical.com/nosqlinsanity-F2thpyebcaNPyCQr4UBabe
 - [x] Menu Input Payload
 - [x] Engine Checker Website is UP or DOWN
 - [x] Engine Vuln Test
-- [ ] Auto Set Success-Identifier
+- [x] Auto Set Success-Identifier
 - [x] Engine Linear
-- [ ] Engine Linear Count Length
+- [x] Engine Linear Count Length
 - [ ] Engine Binary Search
 - [ ] Engine BinSearch Count Length
 - [x] Research ability MongoDB to perform BinSearch
