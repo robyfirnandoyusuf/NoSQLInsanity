@@ -28,7 +28,7 @@ jadi memungkinkan untuk dilakukan optimasi, syaratnya web yg vulnerable mengirim
 https://mongoplayground.net/p/WTnItnWx7D9.
 ```
 
-3. MongoDB regex itu sama dengan regex JS / PHP PCRE: 
+3. MongoDB regex itu sama dengan regex JS / PHP PCRE (ref: https://www.oreilly.com/library/view/mongodb-the-definitive/9781449344795/ch04.html): 
    misal mau nyari apakah length nya itu >= 4 : http://regexr.com/79cmi, klo mau nyari exacth length cukup hapus aja "," koma nya
    dengan ability ini, memungkinkan penerapan binary search
 
