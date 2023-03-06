@@ -13,6 +13,7 @@ import urllib3
 import argparse
 import nsimongo
 from _helper import *
+from termcolor import colored
 
 urllib3.disable_warnings()
 
@@ -27,6 +28,7 @@ class NoSQLInsanity(object):
       self.typeParam = ""
       self.params = list('')
       self.param = ""
+      self.successIdentifier = ""
 
     def banner(self):
       print('''
@@ -49,13 +51,13 @@ class NoSQLInsanity(object):
 
     def mainMenu(self):
       print(self.info())
-      print('''\n=================\n[Attack type]\n\n1) DB Attacks (Exfiltrate)\n''')
+      print(colored(f"\n=================\n[Attack type]\n\n1) DB Attacks (Exfiltrate)\n", "yellow"))
       self.attackType = input("Choose Attack Type >>")
       return self.attackType
 
     def methodMenu(self):
       print(self.info())
-      print('''\n=================\n[Method]\n\n1) Send Request as GET\n2) Send Request as POST\n''')
+      print(colored(f"\n=================\n[Method]\n\n1) Send Request as GET\n2) Send Request as POST\n", "yellow"))
       self.reqMethod = input("Choose Request Method >>")
       return self.reqMethod
     
@@ -86,8 +88,9 @@ if __name__ == "__main__":
       while case('1'):
         choosedParam = nsimongo.paramMenu(nsi)
         # print('ok' + '\n'.join(map(str, nsi.params)))
-        nsimongo.typeReqPayload(nsi)
+        httpMethod = nsimongo.typeReqPayload(nsi)
         alg = nsimongo.algMenu(nsi)
+        nsimongo.checkWeb(url)
         resArr = nsimongo.vulnTest(nsi=nsi)
         
         for item in resArr:
@@ -96,14 +99,17 @@ if __name__ == "__main__":
               print("Injecting .. ")
               break
         else:
-          print("True does not exist in the array")
+          print("Not vulnerable !")
+          exit(0)
         
         if (alg == '1'):
-          nsimongo.slinear(nsi)
+          if (httpMethod == '1') :#GET
+            nsimongo.slinearGet(nsi)
+          else:
+            nsimongo.slinearPost(nsi)
         else:
           nsimongo.sbin(nsi)
         # params = nsimongo.requestBuilder(nsi=nsi, isExploiting=True)
-        # nsimongo.pwnGet(url, params)
         break
       while case('2'):
         print('foo')

