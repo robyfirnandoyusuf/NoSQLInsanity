@@ -23,6 +23,7 @@ https://whimsical.com/nosqlinsanity-F2thpyebcaNPyCQr4UBabe
 - [ ] Engine Binary Search
 - [ ] Engine BinSearch Count Length
 - [x] Research ability MongoDB to perform BinSearch
+- [ ] Add measurement each chars
 #### Shoutout : 
 - Daniel aka BrownieInMotion (DiceGang - Redpwn)
 - Fernanda Darmasaputra (Tim Petir - OurLastNight)
