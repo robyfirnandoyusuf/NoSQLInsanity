@@ -118,7 +118,9 @@ if __name__ == "__main__":
         print('Choosen number invalid !')
         break
 
-
+# !TODO: Menu "Configuration param" supposed to be: 
+# 1. Dump rows by param
+# 2. Dump by known value
 #refs: 
 # https://github.com/eversinc33/Papaya/blob/875a1585f8f0776963c8b004597e7290b530b11c/papaya.py#L121
 # https://github.com/Hex27/mongomap/tree/d16cee2e0b2b2af3c3a34e4f1a21f66cc7dacafe/tests
