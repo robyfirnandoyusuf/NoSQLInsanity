@@ -103,10 +103,10 @@ if __name__ == "__main__":
           exit(0)
         
         if (alg == '1'):
-          if (httpMethod == '1') :#GET
-            nsimongo.slinearGet(nsi)
-          else:
-            nsimongo.slinearPost(nsi)
+          # if (httpMethod == '1') :#GET
+          #   nsimongo.slinearGet(nsi)
+          # else:
+            nsimongo.slinear(nsi)
         else:
           nsimongo.sbin(nsi)
         # params = nsimongo.requestBuilder(nsi=nsi, isExploiting=True)
