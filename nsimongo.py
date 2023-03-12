@@ -47,7 +47,7 @@ def vulnTest(nsi):
 
         resOri = BeautifulSoup(r.text, "lxml")
         resInj = BeautifulSoup(rInj.text, "lxml")
-
+        # print(resOri.body)
         if resOri.body == resInj.body:
             vulnerable.append({v: False})
             print(colored(f"Not vulnerable with {phaseTest} Injection", "red"))
@@ -216,7 +216,7 @@ def dumpKnownValue(nsi, form_data, password):
         #         form_data[element] = "^.{" + str(c) + "}$"
         iterateParam(form_data, "^.{" + str(c) + "}$")
         # r = requests.post(nsi.url, data=form_data, verify=False)
-        if (nsi.reqMethod == 2):
+        if (nsi.reqMethod == '2'):
             r = requests.post(nsi.url, data=form_data, verify=False)
         else:
             r = requests.get(nsi.url, params=form_data, verify=False)
@@ -240,7 +240,7 @@ def dumpKnownValue(nsi, form_data, password):
                 #     if "$regex" in element:
                 #         form_data[element] = f"^{urllib.parse.quote_plus(password+c)}"
                 iterateParam(form_data, f"^{urllib.parse.quote_plus(password+c)}")
-                if (nsi.reqMethod == 2):
+                if (nsi.reqMethod == '2'):
                     r = requests.post(nsi.url, data=form_data, verify=False)
                 else:
                     r = requests.get(nsi.url, params=form_data, verify=False)
