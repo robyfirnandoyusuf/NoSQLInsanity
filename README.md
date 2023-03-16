@@ -23,7 +23,7 @@ https://whimsical.com/nosqlinsanity-F2thpyebcaNPyCQr4UBabe
 - [ ] Engine Binary Search
 - [ ] Engine BinSearch Count Length
 - [x] Research ability MongoDB to perform BinSearch
-- [ ] Add measurement each chars LinearSearch
+- [x] Add measurement each chars LinearSearch
 - [ ] Add measurement each chars BinSearch
 - [ ] Engine on custom payload mode
 
