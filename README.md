@@ -18,14 +18,17 @@ https://whimsical.com/nosqlinsanity-F2thpyebcaNPyCQr4UBabe
 - [x] Engine Checker Website is UP or DOWN
 - [x] Engine Vuln Test
 - [x] Auto Set Success-Identifier
-- [x] Engine Linear
+- [x] Engine Linear (Dump known value)
+- [x] Engine Linear (Dump unknown value)
 - [x] Engine Linear Count Length
-- [ ] Engine Binary Search
-- [ ] Engine BinSearch Count Length
+- [x] Engine Binary Search (Dump known value)
+- [ ] Engine Binary Search (Dump unknown value)
+- [x] Engine BinSearch Count Length
 - [x] Research ability MongoDB to perform BinSearch
-- [x] Add measurement each chars LinearSearch
-- [ ] Add measurement each chars BinSearch
-- [ ] Engine on custom payload mode
+- [x] Add measurement each chars LinearSearch (Dump known value)
+- [x] Add measurement each chars LinearSearch (Dump unknown value)
+- [x] Add measurement each chars BinSearch (Dump known value)
+- [ ] Add measurement each chars BinSearch (Dump unknown value)
 
 #### Shoutout : 
 - Daniel aka BrownieInMotion (DiceGang - Redpwn)
