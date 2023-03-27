@@ -77,3 +77,8 @@ class Str:
         return unquote(urllib.parse.urlencode(params))
         # parsed_url = urlparse(params)
         # return parse_qs(parsed_url.query)
+        
+    def iterateParam(form_data, val):
+        for element in form_data:
+                if "$regex" in element:
+                    form_data[element] = val

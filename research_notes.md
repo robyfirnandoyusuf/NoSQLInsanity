@@ -33,3 +33,29 @@ https://mongoplayground.net/p/WTnItnWx7D9.
    dengan ability ini, memungkinkan penerapan binary search
 
 4. funfact,undocumented feature regex mongodb itu bisa mencari rentang karakter dengan mempassing value dalam representasi hexadecimal dengan WAJIB prefix **\x** ^.[\x{HEX}-\x{HEX}]
+
+5. untuk passing repr hexa via protocol http regex harus dirubah menjadi [\x{HEX VALUE}], kalau query langsung di mongodb bisa langsung [\xHEX VALUE]
+### Approach untuk dump data tanpa diketahui sama sekali salah satu value col
+
+1. cari prefix
+2. cari length
+3. cari index setelah prefix pke within regex
+4. masih diprefix yg sama dipastikan lgi 
+
+
+#### Coretan
+$regex: /^(?!.*admin)(?!.*nando).*.{12}[\x{006b}-\x{006f}].*$/ 
+^(?!.*abcdefghijklm).*a{1}[\x63-\x67].{7}(?!.{13}$).* = bkan abcdefghijklm, second char 63-67, pjg length bkan 13
+^(?!.*abcdefghijklm)(?!.{13}$).*a.{5,}.*
+
+^(?!.*abcdefghijklm)(?!.{13}$)(?!.*\badminxyz\b)(?!.8$).*a.* = ini regex buat include yg udah diexclude
+^(?!.*jsmith)(?!.{6}$).*j([u])
+^(?!.*\babcdefghijklm\b)(?!.{13}$)(?!.*\badminxxyz\b)(?!.{9}$).{6}[i].{0}
+
+kasus dump abcdefghijklm
+^a.{0}[b].{10} = kalau ada prefix
+^.{1}[b].{11} = kalau g ada prefix
+^abc([\x62-\x64]).{9}$ 
+^(?!.*jsmith)(?!.{6}$)^j([a-s])
+a bcdefghijklm
+
