@@ -22,7 +22,7 @@ https://whimsical.com/nosqlinsanity-F2thpyebcaNPyCQr4UBabe
 - [x] Engine Linear (Dump unknown value)
 - [x] Engine Linear Count Length
 - [x] Engine Binary Search (Dump known value)
-- [ ] Engine Binary Search (Dump unknown value)
+- [x] Engine Binary Search (Dump unknown value)
 - [x] Engine BinSearch Count Length
 - [x] Research ability MongoDB to perform BinSearch
 - [x] Add measurement each chars LinearSearch (Dump known value)
