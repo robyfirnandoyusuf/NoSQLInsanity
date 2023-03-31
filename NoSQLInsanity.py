@@ -29,6 +29,7 @@ class NoSQLInsanity(object):
       self.params = list('')
       self.param = ""
       self.successIdentifier = ""
+      self.isSilent = ""
 
     def banner(self):
       print('''
@@ -73,12 +74,20 @@ if __name__ == "__main__":
   parser = argparse.ArgumentParser(description='NoSQLInsanity: Tool for Security Assesment NSQL')
   parser.add_argument('--url', type=str, required=True)
   parser.add_argument('--platform', type=str, required=True)
+  parser.add_argument("--silent", action="store_true", help="run in silent mode")
+
+  
   args = parser.parse_args()
   url = args.url
   platform = args.platform
 
   nsi = NoSQLInsanity(url, platform)
   nsi.banner()
+  
+  if args.silent:
+    nsi.isSilent = True
+  else:
+    nsi.isSilent = False
   
   if platform == 'mongodb':
     

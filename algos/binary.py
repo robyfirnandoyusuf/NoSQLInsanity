@@ -105,7 +105,8 @@ def binarySearchContent(nsi, form_data, index=0, length=1, left=1, right=0x7f,):
             total_time.append(time_taken)
             # print(total_time)
             # print(f"[!] Answer: {i} ({chr(i)})")
-            print(colored(f"Time taken for append {chr(i)}: {time_taken}", "yellow", attrs=["blink"]))
+            if (not nsi.isSilent):
+                print(colored(f"Time taken for append {chr(i)}: {time_taken}", "yellow", attrs=["blink"]))
             return i
 
 def getPrefix(nsi, form_data):
@@ -338,7 +339,8 @@ def getDumpDataLength(nsi, username, form_data, found = ""):
                 total_time += time_taken
                 
                 length = i
-                print(colored(f"Time taken for append {i}: {time_taken}", "yellow", attrs=["blink"]))
+                if (not nsi.isSilent):
+                    print(colored(f"Time taken for append {i}: {time_taken}", "yellow", attrs=["blink"]))
                 start_time_len = time.time()
                 total_time = 0
                 # break

