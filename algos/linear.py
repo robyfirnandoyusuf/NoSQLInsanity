@@ -92,7 +92,7 @@ def getPrefix(nsi, form_data):
                     print(colored(f"Time taken for {c}: {time_taken}", "yellow", attrs=["blink"]))
 
     print(colored(f"Total time get username prefixes: {total_time}", "yellow", attrs=["blink"]))
-    print(timesPrefix)
+    # print(timesPrefix)
     for username in prefixUsernames:
         dumpData(nsi, username, form_data)
 

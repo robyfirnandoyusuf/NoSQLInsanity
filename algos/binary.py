@@ -296,8 +296,9 @@ def getDumpDataLength(nsi, username, form_data, found = ""):
     left = 1
     right = 100
     v = 1
-    start_time_len = time.time()
-    total_time = 0
+    
+    start_time_length = time.time()
+    total_time_length = 0
     
     regex_pattern = ""
     if (found != ''):
@@ -335,14 +336,15 @@ def getDumpDataLength(nsi, username, form_data, found = ""):
         if query(nsi, form_data):
             if v == 1:
                 end_time = time.time()
-                time_taken = end_time - start_time_len
-                total_time += time_taken
+                time_taken = end_time - start_time_length
+                total_time_length += time_taken
                 
                 length = i
                 if (not nsi.isSilent):
                     print(colored(f"Time taken for append {i}: {time_taken}", "yellow", attrs=["blink"]))
-                start_time_len = time.time()
-                total_time = 0
+                start_time_length = time.time()
+                total_time_length = 0
                 # break
-    # print(f'length:::: {length}')
+    if (not nsi.isSilent):
+        print(f'time taken length: {time_taken}')
     return length
