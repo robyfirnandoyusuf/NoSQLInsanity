@@ -134,7 +134,7 @@ def dumpData(nsi, username, form_data, total_time = 0):
                 time_taken = end_time - start_time
                 total_time += time_taken
                 
-                if (not nsi.iSilent):
+                if (not nsi.isSilent):
                     print(colored(f"Time taken for append {c}: {time_taken}", "yellow", attrs=["blink"]))
                     
                 start_time = time.time()

