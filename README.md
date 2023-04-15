@@ -28,7 +28,8 @@ https://whimsical.com/nosqlinsanity-F2thpyebcaNPyCQr4UBabe
 - [x] Add measurement each chars LinearSearch (Dump known value)
 - [x] Add measurement each chars LinearSearch (Dump unknown value)
 - [x] Add measurement each chars BinSearch (Dump known value)
-- [ ] Add measurement each chars BinSearch (Dump unknown value)
+- [x] Add measurement each chars BinSearch (Dump unknown value)
+- [ ] Log Report HTML
 
 #### Shoutout : 
 - Daniel aka BrownieInMotion (DiceGang - Redpwn)
