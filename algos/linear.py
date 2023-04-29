@@ -63,6 +63,9 @@ def dumpKnownValue(nsi, form_data, password):
                 
     print("Total Time: " + str(sum(total_time_char)))
     print("Result : %s" % (password))
+    
+    # Log to CSV
+    CsvWriter.writeCsv(nsi, password, True)
 
 def getPrefix(nsi, form_data):
     prefixUsernames = []
@@ -116,6 +119,8 @@ def dumpData(nsi, username, form_data, total_time = 0):
         r = requests.post(nsi.url, data=updated_form_data, verify=False)
         if nsi.successIdentifier in r.text:
             print(f"Result: {username} | Total Time: {total_time}")
+            # Log to CSV
+            CsvWriter.writeCsv(nsi, username, False)
             # return
             # start_time = time.time()
             # total_time = 0

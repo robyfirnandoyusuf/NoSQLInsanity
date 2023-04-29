@@ -6,6 +6,8 @@ from urllib.parse import urlencode, unquote
 import urllib.parse
 from urllib.parse import unquote
 import socket
+import csv
+
 class Switch:
     def __init__(self, value):
         self.value = value
@@ -82,3 +84,45 @@ class Str:
         for element in form_data:
                 if "$regex" in element:
                     form_data[element] = val
+                    
+class CsvWriter:
+    def __init__(self, file_path, header=None):
+        self.file_path = file_path
+        self.header = header
+        
+        # Write header row if file is empty and header is provided
+        if self.header is not None:
+            with open(self.file_path, 'a', newline='') as csv_file:
+                csv_writer = csv.writer(csv_file)
+                
+                with open(self.file_path, 'r', newline='') as csv_file_read:
+                    csv_reader = csv.reader(csv_file_read)
+                    if not any(csv_reader):
+                        csv_writer.writerow(self.header)
+
+    def append_row(self, content):
+        with open(self.file_path, 'a', newline='') as csv_file:
+            csv_writer = csv.writer(csv_file)
+            csv_writer.writerow(content)
+            
+    def writeCsv(nsi, value, isKnownValue=False):
+        headers = []
+        knownValue = ""
+        rows = []
+        
+        if (isKnownValue):
+            for item in nsi.params:
+                headers.append(item.split(':')[0].replace('*', ''))
+                if (":" in item):
+                    knownValue = item.split(':')[1]
+                    rows.append(knownValue)
+                else:
+                    rows.append(value)
+        else:
+            for item in nsi.params:
+                if ("*" in item):
+                    headers.append(item.split(':')[0].replace('*', ''))
+                    rows.append(value)
+        
+        csv_writer = CsvWriter('my_file.csv', headers)
+        csv_writer.append_row(rows)
