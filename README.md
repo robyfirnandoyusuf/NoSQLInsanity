@@ -33,6 +33,7 @@ Coming Soon
 
 ### Usage
 `$ python3 NoSQLInsanity.py --url "https://lab.s.he-left.me/auth/login" --platform "mongodb"`
+<img src="https://i.postimg.cc/WzCBctnB/Screenshot-214.png">
 
 ### Options
 Here are all the options it supports.
