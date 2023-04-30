@@ -1,0 +1,6 @@
+BeautifulSoup==3.2.2
+beautifulsoup4==4.12.2
+requests==2.22.0
+requests_html==0.10.0
+termcolor==1.1.0
+urllib3==1.25.8
