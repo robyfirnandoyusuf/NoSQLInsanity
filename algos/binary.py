@@ -71,6 +71,8 @@ def dumpKnownValue(nsi, form_data, password, v=1):
         r.append(chr(x))
     print("Total Time: " + str(sum(total_time)))
     print('Password: '+ ''.join(r))
+    # Log to CSV
+    CsvWriter.writeCsv(nsi, ''.join(r), True)
     
     
 def binarySearchContent(nsi, form_data, index=0, length=1, left=1, right=0x7f,):
@@ -249,6 +251,8 @@ def dumpData(nsi, username, form_data, row = 0, index = 1, length = 1, left = 1,
         found.append(letters_found)
         mergeFound = str(found[len(found) - 1])
         print(colored(f"Found: {mergeFound} Total Time: {total_time}", "green", attrs=["blink"]))
+        # Log to CSV
+        CsvWriter.writeCsv(nsi, mergeFound, True)
     else :
         # dump row 1
         ########### ini enumerasi rentang dri sebuah field untuk memperkecil pencarian ###########
@@ -311,6 +315,9 @@ def dumpData(nsi, username, form_data, row = 0, index = 1, length = 1, left = 1,
         found.append(letters_found)
         mergeFound = "".join(found)
         print(colored(f"Found: { mergeFound } - Total Time: {total_time}", "green", attrs=["blink"]))
+        
+        # Log to CSV
+        CsvWriter.writeCsv(nsi, mergeFound, True)
         
     # print(found)
     # time.sleep(5)
