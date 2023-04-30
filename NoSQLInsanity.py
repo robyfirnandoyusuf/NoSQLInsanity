@@ -74,7 +74,7 @@ if __name__ == "__main__":
   parser = argparse.ArgumentParser(description='NoSQLInsanity: Tool for Security Assesment NSQL')
   parser.add_argument('--url', type=str, required=True)
   parser.add_argument('--platform', type=str, required=True)
-  parser.add_argument("--silent", action="store_true", help="run in silent mode")
+  parser.add_argument("-s", "--silent", dest="silent" , action="store_true", help="run in silent mode")
 
   
   args = parser.parse_args()
