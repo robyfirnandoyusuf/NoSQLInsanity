@@ -29,6 +29,12 @@ $ git clone https://github.com/robyfirnandoyusuf/NoSQLInsanity.git
 $ cd NoSQLInsanity/
 $ pip3 install -r requirements.txt
 ```
+#### from Docker
+Pull the Docker image by running:
+
+```bash
+$ docker pull robyfirnando/nosqlinsanity:v1
+```
 
 #### from PyPi
 Coming Soon
