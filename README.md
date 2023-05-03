@@ -1,3 +1,5 @@
+[![contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/robyfirnandoyusuf/NoSQLInsanity/issues)
+
 # 💉 NoSQLInsanity
 <p><img src="https://i.postimg.cc/bJGrw0H6/16149.png" width="250px"></p>
 
