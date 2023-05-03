@@ -29,12 +29,25 @@ $ git clone https://github.com/robyfirnandoyusuf/NoSQLInsanity.git
 $ cd NoSQLInsanity/
 $ pip3 install -r requirements.txt
 ```
+#### from Docker
+Pull the Docker image by running:
+
+```bash
+$ docker pull robyfirnando/nosqlinsanity:v1
+```
 
 #### from PyPi
 Coming Soon
 
 ### Usage
-`$ python3 NoSQLInsanity.py --url "https://lab.s.he-left.me/auth/login" --platform "mongodb"`
+Simply,
+```bash
+# from source
+$ python3 NoSQLInsanity.py --url "https://lab.s.he-left.me/auth/login" --platform "mongodb"
+# from docker
+$ docker run -it robyfirnando/nosqlinsanity:v1 --url "https://lab.s.he-left.me/auth/login" --platform "mongodb"
+```
+
 <img src="https://i.postimg.cc/WzCBctnB/Screenshot-214.png">
 
 ### Options
