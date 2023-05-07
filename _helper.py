@@ -7,6 +7,7 @@ import urllib.parse
 from urllib.parse import unquote
 import socket
 import csv
+import datetime
 
 class Switch:
     def __init__(self, value):
@@ -124,5 +125,7 @@ class CsvWriter:
                     headers.append(item.split(':')[0].replace('*', ''))
                     rows.append(value)
         
-        csv_writer = CsvWriter('my_file.csv', headers)
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        filename = f"log-{timestamp}.csv"
+        csv_writer = CsvWriter(filename, headers)
         csv_writer.append_row(rows)
