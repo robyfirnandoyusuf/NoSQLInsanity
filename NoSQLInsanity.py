@@ -9,13 +9,16 @@ __copyright__   = "Copyright 2022"
 # import urllib
 # import json
 from json.tool import main
-import urllib3
+# import warnings
+# warnings.filterwarnings("ignore", category=DeprecationWarning) 
+
+# import urllib3
 import argparse
 import nsimongo
 from _helper import *
 from termcolor import colored
 
-urllib3.disable_warnings()
+# urllib3.disable_warnings()
 
 class NoSQLInsanity(object):
     def __init__(self, url, platform):
