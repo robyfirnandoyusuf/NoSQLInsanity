@@ -124,7 +124,6 @@ if __name__ == "__main__":
         # params = nsimongo.requestBuilder(nsi=nsi, isExploiting=True)
         break
       while case('2'):
-        print('foo')
         nsimongo.history(nsi)
         break
       while case.default:
