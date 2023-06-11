@@ -65,7 +65,7 @@ def dumpKnownValue(nsi, form_data, password):
     print("Result : %s" % (password))
     
     # Log to CSV
-    CsvWriter.writeCsv(nsi, password, True)
+    Report.writeExcel(nsi, password, True)
 
 def getPrefix(nsi, form_data):
     prefixUsernames = []
@@ -120,7 +120,7 @@ def dumpData(nsi, username, form_data, total_time = 0):
         if nsi.successIdentifier in r.text:
             print(f"Result: {username} | Total Time: {total_time}")
             # Log to CSV
-            CsvWriter.writeCsv(nsi, username, False)
+            Report.writeExcel(nsi, username, False)
             # return
             # start_time = time.time()
             # total_time = 0

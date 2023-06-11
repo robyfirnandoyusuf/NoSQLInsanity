@@ -8,6 +8,9 @@ from urllib.parse import unquote
 import socket
 import csv
 import datetime
+from openpyxl import Workbook
+from openpyxl import load_workbook
+from openpyxl.utils import get_column_letter
 
 class Switch:
     def __init__(self, value):
@@ -86,7 +89,7 @@ class Str:
                 if "$regex" in element:
                     form_data[element] = val
                     
-class CsvWriter:
+class Report:
     def __init__(self, file_path, header=None):
         self.file_path = file_path
         self.header = header
@@ -110,7 +113,7 @@ class CsvWriter:
         headers = []
         knownValue = ""
         rows = []
-        
+
         if (isKnownValue):
             for item in nsi.params:
                 headers.append(item.split(':')[0].replace('*', ''))
@@ -127,5 +130,43 @@ class CsvWriter:
         
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         filename = f"log-{timestamp}.csv"
-        csv_writer = CsvWriter(filename, headers)
+        csv_writer = Report(filename, headers)
         csv_writer.append_row(rows)
+        
+    def writeExcel(nsi, value, isKnownValue=False):
+        headers = []
+        rows = []
+
+        if isKnownValue:
+            for item in nsi.params:
+                header = item.split(':')[0].replace('*', '')
+                headers.append(header)
+                if ":" in item:
+                    knownValue = item.split(':')[1]
+                    rows.append(knownValue)
+                else:
+                    rows.append(value)
+        else:
+            for item in nsi.params:
+                if "*" in item:
+                    header = item.split(':')[0].replace('*', '')
+                    headers.append(header)
+                    rows.append(value)
+
+        timestampName = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        timestampValue = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        
+        filename = f"log-{timestampName}.xlsx"
+        workbook = Workbook()
+        sheet = workbook.active
+        sheet.append(["URL Target:", nsi.url])
+        sheet.append(["Attacked At:", timestampValue])
+        sheet.append(headers)
+        sheet.append(rows)
+        workbook.save(filename)
+        
+    def readExcel(filepath):
+        workbook = load_workbook(filepath)
+        sheet = workbook.active
+        value = [sheet.cell(row=1, column=2).value, sheet.cell(row=2, column=2).value]
+        return value

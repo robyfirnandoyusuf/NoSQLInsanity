@@ -55,7 +55,7 @@ class NoSQLInsanity(object):
 
     def mainMenu(self):
       print(self.info())
-      print(colored(f"\n=================\n[Attack type]\n\n1) DB Attacks (Exfiltrate)\n", "yellow"))
+      print(colored(f"\n=================\n[Attack type]\n\n1) DB Attacks (Exfiltrate)\n2) History", "yellow"))
       self.attackType = input("Choose Attack Type >>")
       return self.attackType
 
@@ -125,6 +125,7 @@ if __name__ == "__main__":
         break
       while case('2'):
         print('foo')
+        nsimongo.history(nsi)
         break
       while case.default:
         print('Choosen number invalid !')

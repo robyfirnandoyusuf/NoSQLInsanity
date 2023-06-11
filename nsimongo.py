@@ -9,6 +9,7 @@ from termcolor import colored
 import time
 import algos.linear as linear
 import algos.binary as binary
+import os
 
 try:
     from BeautifulSoup import BeautifulSoup
@@ -114,6 +115,25 @@ def algMenu(nsi):
     )
     nsi.alg = input("Choose Algorithm >>")
     return nsi.alg
+
+def history(nsi):
+    current_directory = os.getcwd()
+    files = os.listdir(current_directory)
+    log_files = [file for file in files if file.startswith("log-") and file.endswith(".xlsx")]
+
+    if len(log_files) == 0:
+        print(colored("No log files found in the current directory.", "yellow"))
+        return
+
+    print(colored("\n=================\n[History]\n", "yellow"))
+
+    for file in log_files:
+        filepath = os.path.join(current_directory, file)
+        value = Report.readExcel(filepath)
+        print(f"File: {file}")
+        print(f"URL Target: {value[0]}")
+        print(f"Attacked At: {value[1]}")
+        print("---------------------")
 
 
 def slinear(nsi):
