@@ -33,7 +33,7 @@ $ pip3 install -r requirements.txt
 Pull the Docker image by running:
 
 ```bash
-$ docker pull robyfirnando/nosqlinsanity:v1
+$ docker pull robyfirnando/nosqlinsanity:v2.0.1
 ```
 
 #### from PyPi
@@ -45,7 +45,7 @@ Simply,
 # from source
 $ python3 NoSQLInsanity.py --url "https://lab.s.he-left.me/auth/login" --platform "mongodb"
 # from docker
-$ docker run -it robyfirnando/nosqlinsanity:v1 --url "https://lab.s.he-left.me/auth/login" --platform "mongodb"
+$ docker run -it robyfirnando/nosqlinsanity:v2.0.1 --url "https://lab.s.he-left.me/auth/login" --platform "mongodb"
 ```
 
 <img src="https://i.postimg.cc/WzCBctnB/Screenshot-214.png">
