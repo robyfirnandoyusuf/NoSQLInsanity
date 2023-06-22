@@ -151,7 +151,6 @@ class Report:
                 if "*" in item:
                     header = item.split(':')[0].replace('*', '')
                     headers.append(header)
-                    rows.append(value)
 
         timestampName = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         timestampValue = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -162,7 +161,11 @@ class Report:
         sheet.append(["URL Target:", nsi.url])
         sheet.append(["Attacked At:", timestampValue])
         sheet.append(headers)
-        sheet.append(rows)
+        if isKnownValue:
+            sheet.append(rows)
+        else:
+            for row in value:
+                sheet.append([row])
         workbook.save(filename)
         
     def readExcel(filepath):

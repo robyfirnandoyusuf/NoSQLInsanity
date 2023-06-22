@@ -6,6 +6,8 @@ import urllib
 import time
 from _helper import *
 
+allData = []
+
 def dumpKnownValue(nsi, form_data, password):
     start_time_length = time.time()
     total_time_length = 0
@@ -95,11 +97,19 @@ def getPrefix(nsi, form_data):
                     print(colored(f"Time taken for {c}: {time_taken}", "yellow", attrs=["blink"]))
 
     print(colored(f"Total time get username prefixes: {total_time}", "yellow", attrs=["blink"]))
-    # print(timesPrefix)
+    
     for username in prefixUsernames:
         dumpData(nsi, username, form_data)
 
 
+    #pluck
+    values = list(map(lambda item: item['value'], filter(lambda item: 'value' in item, allData)))
+    # Log to CSV
+    Report.writeExcel(nsi, values, False)
+    # for dump in allData:
+    #     print(dump['value'])
+    #     Report.writeExcel(nsi, dump['value'], False)
+    # Log to CSV
 # recursive
 def dumpData(nsi, username, form_data, total_time = 0):
     # alphabet = list(string.ascii_letters) + list(string.digits)
@@ -118,9 +128,11 @@ def dumpData(nsi, username, form_data, total_time = 0):
             updated_form_data[element] = form_data[element]
         r = requests.post(nsi.url, data=updated_form_data, verify=False)
         if nsi.successIdentifier in r.text:
+            allData.append({
+                'value': username,
+                'total_time': total_time
+            })
             print(f"Result: {username} | Total Time: {total_time}")
-            # Log to CSV
-            Report.writeExcel(nsi, username, False)
             # return
             # start_time = time.time()
             # total_time = 0
