@@ -146,8 +146,13 @@ def getPrefix(nsi, form_data):
         print(initLength)
         dumpData(nsi=nsi, username=username, form_data=form_data, row=n, index=1, length=initLength)
         n += 1
+    
+    #pluck
+    values = list(map(lambda item: item['value'], filter(lambda item: 'value' in item, allData)))
+    # Log to CSV
+    Report.writeExcel(nsi, values, False)
 
-dump_data = []
+allData = []
 lens = []
 def dumpData(nsi, username, form_data, row = 0, index = 1, length = 1, left = 1, right = 0x7f, found = []):
     res_chars = []
@@ -250,9 +255,11 @@ def dumpData(nsi, username, form_data, row = 0, index = 1, length = 1, left = 1,
             return
         found.append(letters_found)
         mergeFound = str(found[len(found) - 1])
+        allData.append({
+            'value': mergeFound,
+            'total_time': total_time
+        })
         print(colored(f"Found: {mergeFound} Total Time: {total_time}", "green", attrs=["blink"]))
-        # Log to CSV
-        Report.writeExcel(nsi, mergeFound, True)
     else :
         # dump row 1
         ########### ini enumerasi rentang dri sebuah field untuk memperkecil pencarian ###########
@@ -314,10 +321,12 @@ def dumpData(nsi, username, form_data, row = 0, index = 1, length = 1, left = 1,
             # print("Total Time:" + str(total_time))
         found.append(letters_found)
         mergeFound = "".join(found)
-        print(colored(f"Found: { mergeFound } - Total Time: {total_time}", "green", attrs=["blink"]))
         
-        # Log to CSV
-        Report.writeExcel(nsi, mergeFound, True)
+        allData.append({
+            'value': mergeFound,
+            'total_time': total_time
+        })
+        print(colored(f"Found: { mergeFound } - Total Time: {total_time}", "green", attrs=["blink"]))
         
     # print(found)
     # time.sleep(5)
