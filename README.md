@@ -69,7 +69,7 @@ Here are all the options it supports.
 ## Acknowledments
 
 Since this tool includes some contributions, and I'm not an asshole, I'll publically thank the following users for their supports, helps and resources:
-- Daniel Roo aka BrownieInMotion (DiceGang - Redpwn)
+- Daniel Lu aka BrownieInMotion (DiceGang - Redpwn)
 - Fernanda Darmasaputra (Tim Petir - OurLastNight)
 - Pavel Sorokin (BI.ZONE Security Researcher)
 - and You
