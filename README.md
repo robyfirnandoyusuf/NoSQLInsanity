@@ -4,7 +4,7 @@
 <p><img src="https://i.postimg.cc/bJGrw0H6/16149.png" width="250px"></p>
 
 #### This research for final year project
-NoSQLInsanity: Tool for NoSQL Database Security Penetration Testing
+NoSQLInsanity: Tool for NoSQL Database Security Audit
 
 ### Whitepaper and Slide
 Paper : https://jurnal.ubhinus.ac.id/index.php/J-INTECH/article/view/980/686<br>
