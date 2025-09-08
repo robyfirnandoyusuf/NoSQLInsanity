@@ -6,6 +6,10 @@
 #### This research for final year project
 NoSQLInsanity: Tool for Security Assesment NoSQL
 
+### Whitepaper and Slide
+Paper : https://jurnal.ubhinus.ac.id/index.php/J-INTECH/article/view/980/686<br>
+Slide : https://docs.google.com/presentation/d/1pQpXUFeMGmT3h4KhPl9n71Ma-cI4FGDIWuzd37F3kC8/edit?slide=id.g1f87997393_0_782#slide=id.g1f87997393_0_782
+
 ### Wireframe
 https://whimsical.com/nosqlinsanity-F2thpyebcaNPyCQr4UBabe
 
